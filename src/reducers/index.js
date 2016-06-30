@@ -35,6 +35,8 @@ const input = (input = '', action) => {
       return action.input || ''
     case UPDATE_SELECTED_SUGGESTION:
       return action.suggestion.label ? action.suggestion.label : input
+    case REQUEST_VOCAB:
+      return ''
     default:
       return input
   }
