@@ -10,7 +10,7 @@ const _ = require('highland')
     , {JSONLDNode, JSONLDValue} = require('immutable-jsonld')
     , ns = require('rdf-ns')
 
-const LOV_V2 = 'http://lov.okfn.org/dataset/lov/api/v2'
+const LOV_V2 = 'https://lov.okfn.org/dataset/lov/api/v2'
 const VOCAB_LIST = `${LOV_V2}/vocabulary/list`
 const VOCAB_INFO = `${LOV_V2}/vocabulary/info?vocab=`
 
@@ -96,7 +96,9 @@ const parseClassesAndProperties = url => _(request(url).pipe(N3.StreamParser()))
           : {classes, properties}
     ))
 
-const getLatestVersionURL = info => List(info.versions).first().fileURL
+const getLatestVersionURL = info => List(info.versions)
+  .first()
+  .fileURL.replace(/^http:/, 'https:')
 
 exports.getVocabulary = vocab => new Promise((resolve, reject) => {
   requestJSON(`${VOCAB_INFO}${encodeURIComponent(vocab)}`)
