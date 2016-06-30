@@ -12,13 +12,29 @@ const React = require('react') // eslint-disable-line no-unused-vars
 
 const App = props => (
   <div>
+    <span className="inline-block mb1">Loaded vocabularies:</span>
+    {props.vocabularies.isEmpty()
+      ? ' none'
+      : (
+          <ul>
+          {props.vocabularies.map((v,i) => <li key={`vocab-${i}`}>{v}</li>)}
+          </ul>
+        )
+    }
     <AddSuggestion {...props} />
     <Editor {...props} />
   </div>
 )
 
+const getTitle = vocab => vocab.info.get('titles').first().get('value')
+
 const mapStateToProps = (state) => (
-  { input: state.input
+  { vocabularies:
+      state.loadedVocabs
+        .valueSeq()
+        .filterNot(vocab => vocab.isFetching)
+        .map(getTitle)
+  , input: state.input
   , suggestions: getVocabSuggestions(state)
   , selectedSuggestion: state.selectedSuggestion
   , classes: state.classes

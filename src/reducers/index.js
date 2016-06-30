@@ -49,7 +49,7 @@ const selectedSuggestion = (selectedSuggestion = {}, action) => {
   }
 }
 
-const vocab = (vocab = {isFetching: false}, action) => {
+const vocab = (vocab = {info: Map(), isFetching: false}, action) => {
   switch (action.type) {
     case REQUEST_VOCAB:
       return (
@@ -60,21 +60,19 @@ const vocab = (vocab = {isFetching: false}, action) => {
     case RECEIVE_VOCAB:
       return (
         { ...vocab
+        , info: action.info
         , isFetching: false
         }
       )
   }
 }
 
-const loadedVocabs = (loadedVocabs = {}, action) => {
+const loadedVocabs = (loadedVocabs = Map(), action) => {
   switch (action.type) {
     case RECEIVE_VOCAB:
     case REQUEST_VOCAB:
-      return (
-        { ...loadedVocabs
-        , [action.vocab]: vocab(loadedVocabs[action.vocab], action)
-        }
-      )
+      return loadedVocabs.set(
+        action.vocab, vocab(loadedVocabs[action.vocab], action))
     case RECEIVE_ERROR:
       console.log(action.error)
     default:

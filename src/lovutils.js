@@ -6,7 +6,7 @@ const _ = require('highland')
       , getLiteralLanguage
       } = N3.Util
     , request = require('request')
-    , {Map, List, Set} = require('immutable')
+    , {Map, List, Set, fromJS} = require('immutable')
     , {JSONLDNode, JSONLDValue} = require('immutable-jsonld')
     , ns = require('rdf-ns')
 
@@ -96,19 +96,14 @@ const parseClassesAndProperties = url => _(request(url).pipe(N3.StreamParser()))
           : {classes, properties}
     ))
 
-exports.getClassesAndProperties = vocab => new Promise((resolve, reject) => {
+const getLatestVersionURL = info => List(info.versions).first().fileURL
+
+exports.getVocabulary = vocab => new Promise((resolve, reject) => {
   requestJSON(`${VOCAB_INFO}${encodeURIComponent(vocab)}`)
     .stopOnError(reject)
-    // get list of vocabulary versions
-    .flatMap(info => info.versions)
-    // take the first one
-    .take(1)
-    // get its file URL
-    .map(version => version.fileURL)
-    // request and parse it
-    .apply(url => parseClassesAndProperties(url)
+    .apply(info => parseClassesAndProperties(getLatestVersionURL(info))
       .stopOnError(reject)
-      .apply(resolve)
+      .apply(o => resolve({info: fromJS(info), ...o}))
     )
 })
 

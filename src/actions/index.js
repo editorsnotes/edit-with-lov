@@ -1,4 +1,4 @@
-const {getVocabularies, getClassesAndProperties} = require('../lovutils')
+const {getVocabularies, getVocabulary} = require('../lovutils')
 
 const UPDATE_INPUT = 'UPDATE_INPUT'
 const UPDATE_SELECTED_SUGGESTION = 'UPDATE_SELECTED_SUGGESTION'
@@ -38,9 +38,10 @@ const requestVocab = vocab => (
   }
 )
 
-const receiveVocab = (vocab, {classes, properties}) => (
+const receiveVocab = (vocab, {info, classes, properties}) => (
   { type: RECEIVE_VOCAB
   , vocab
+  , info
   , classes
   , properties
   , receivedAt: Date.now()
@@ -56,7 +57,7 @@ const receiveError = error => (
 
 const fetchVocab = vocab => dispatch => {
   dispatch(requestVocab(vocab))
-  return getClassesAndProperties(vocab)
+  return getVocabulary(vocab)
     .then(o => dispatch(receiveVocab(vocab, o)))
     .catch(error => dispatch(receiveError(error)))
 }
