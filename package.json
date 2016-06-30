@@ -9,8 +9,10 @@
     "transpile": "babel src -d lib --source-maps inline",
     "prebuild": "npm -s run lint",
     "build": "npm -s run transpile",
-    "presetup": "npm -s run build",
-    "develop": "budo src --css node_modules/react-jsonld-editor/src/style.css --live -- -t [ babelify --sourceMaps inline ]"
+    "develop": "budo src --css node_modules/react-jsonld-editor/src/style.css --live -- -t [ babelify --sourceMaps inline ]",
+    "prestandalone": "npm -s run build && mkdir -p standalone",
+    "standalone": "browserify lib | uglifyjs -c > standalone/bundle.js",
+    "poststandalone": "cp src/index.html node_modules/react-jsonld-editor/src/style.css standalone && zip -r standalone.zip standalone"
   },
   "author": "Ryan Shaw",
   "license": "ISC",
@@ -23,7 +25,8 @@
     "babel-preset-react": "^6.1.2",
     "babelify": "^7.2.0",
     "budo": "^8.0.4",
-    "eslint": "^2.12.0"
+    "eslint": "^2.12.0",
+    "uglify": "^0.1.5"
   },
   "dependencies": {
     "highland": "^2.8.1",
