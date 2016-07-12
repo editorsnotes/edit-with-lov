@@ -54,18 +54,9 @@ const selectedSuggestion = (selectedSuggestion = {}, action) => {
 const vocab = (vocab = {info: Map(), isFetching: false}, action) => {
   switch (action.type) {
     case REQUEST_VOCAB:
-      return (
-        { ...vocab
-         , isFetching: true
-        }
-      )
+      return Object.assign({}, vocab, {isFetching: true})
     case RECEIVE_VOCAB:
-      return (
-        { ...vocab
-        , info: action.info
-        , isFetching: false
-        }
-      )
+      return Object.assign({}, vocab, {info: action.info, isFetching: false})
   }
 }
 

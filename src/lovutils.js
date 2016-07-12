@@ -105,7 +105,7 @@ exports.getVocabulary = vocab => new Promise((resolve, reject) => {
     .stopOnError(reject)
     .apply(info => parseClassesAndProperties(getLatestVersionURL(info))
       .stopOnError(reject)
-      .apply(o => resolve({info: fromJS(info), ...o}))
+      .apply(o => resolve(Object.assign({}, {info: fromJS(info)}, o)))
     )
 })
 

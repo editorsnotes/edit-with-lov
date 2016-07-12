@@ -1,4 +1,5 @@
 const React = require('react') // eslint-disable-line no-unused-vars
+    , h = require('react-hyperscript')
     , {render} = require('react-dom')
     , {createStore, applyMiddleware, compose} = require('redux')
     , {Provider} = require('react-redux')
@@ -18,6 +19,9 @@ const store = createStore(
   )
 )
 
-render((<Provider store={store}><App /></Provider>), mount)
+render(
+  h(Provider, { store }, h(App)),
+  mount
+)
 
 store.dispatch(fetchVocabs())

@@ -1,4 +1,5 @@
 const React = require('react') // eslint-disable-line no-unused-vars
+    , h = require('react-hyperscript')
     , {connect} = require('react-redux')
     , {bindActionCreators} = require('redux')
     , Editor = require('react-jsonld-editor')
@@ -11,19 +12,19 @@ const React = require('react') // eslint-disable-line no-unused-vars
     , {getVocabSuggestions} = require('../selectors')
 
 const App = props => (
-  <div>
-    <span className="inline-block mb1">Loaded vocabularies:</span>
-    {props.vocabularies.isEmpty()
+  h('div', [
+    h('span .inline-block .mb1', 'Loaded vocabularies:'),
+
+    props.vocabularies.isEmpty()
       ? ' none'
-      : (
-          <ul>
-          {props.vocabularies.map((v,i) => <li key={`vocab-${i}`}>{v}</li>)}
-          </ul>
-        )
-    }
-    <AddSuggestion {...props} />
-    <Editor {...props} />
-  </div>
+      : h('ul', props.vocabularies.map((v, i) =>
+          h('li', { key: `vocab-${i}` }, v)
+        )) ,
+
+    h(AddSuggestion, props),
+
+    h(Editor, props),
+  ])
 )
 
 const getTitle = vocab => vocab.info.get('titles').first().get('value')
@@ -55,13 +56,12 @@ const mapDispatchToProps = dispatch => (
   }
 )
 
-const mergeProps = (stateProps, dispatchProps) => (
-  { ...stateProps
-  , ...dispatchProps
-  , onAdd: stateProps.selectedSuggestion.id
-      ? () => dispatchProps.fetchVocab(stateProps.selectedSuggestion.id)
-      : null
-  }
-)
+const mergeProps = (stateProps, dispatchProps) =>
+  Object.assign({}, stateProps, dispatchProps,
+    { onAdd: stateProps.selectedSuggestion.id
+        ? () => dispatchProps.fetchVocab(stateProps.selectedSuggestion.id)
+        : null
+    }
+  )
 
 module.exports = connect(mapStateToProps, mapDispatchToProps, mergeProps)(App)
