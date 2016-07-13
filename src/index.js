@@ -1,6 +1,5 @@
-const React = require('react') // eslint-disable-line no-unused-vars
+const React = require('react')
     , h = require('react-hyperscript')
-    , {render} = require('react-dom')
     , {createStore, applyMiddleware, compose} = require('redux')
     , {Provider} = require('react-redux')
     , thunk = require('redux-thunk').default
@@ -8,20 +7,28 @@ const React = require('react') // eslint-disable-line no-unused-vars
     , reducer = require('./reducers')
     , App = require('./containers/App')
 
-const mount = document.createElement('div')
-document.body.appendChild(mount)
+module.exports = React.createClass({
+  displayName: 'LOVLinkedDataEditor',
 
-const store = createStore(
-  reducer,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-)
+  getDefaultProps() {
+    return {
+      store: createStore(
+        reducer,
+        compose(
+          applyMiddleware(thunk),
+          global.devToolsExtension ? global.devToolsExtension() : f => f
+        )
+      )
+    }
+  },
 
-render(
-  h(Provider, { store }, h(App)),
-  mount
-)
+  componentDidMount() {
+    const {store} = this.props
 
-store.dispatch(fetchVocabs())
+    store.dispatch(fetchVocabs())
+  },
+
+  render() {
+    return h(Provider, this.props, h(App))
+  }
+})
