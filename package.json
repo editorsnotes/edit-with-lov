@@ -25,6 +25,7 @@
     "babelify": "^7.2.0",
     "budo": "^8.0.4",
     "eslint": "^2.12.0",
+    "react-dom": "^15.2.1",
     "uglify": "^0.1.5"
   },
   "dependencies": {
@@ -32,11 +33,14 @@
     "immutable": "^3.8.1",
     "n3": "^0.4.5",
     "rdf-ns": "0.0.2",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
     "react-hyperscript": "^2.4.0",
+    "react-jsonld-editor": "^2.0.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "reselect": "^2.5.3"
+  },
+  "peerDependencies": {
+    "react": "^0.14.7 || ^15.2.1"
   }
 }
