@@ -34,7 +34,7 @@
     "n3": "^0.4.5",
     "rdf-ns": "0.0.2",
     "react-hyperscript": "^2.4.0",
-    "react-jsonld-editor": "^2.0.0",
+    "react-jsonld-editor": "^3.0.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
