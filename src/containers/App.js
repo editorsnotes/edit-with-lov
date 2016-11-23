@@ -81,8 +81,8 @@ const App = (
           , h(Button,
             {onClick: () => saveAs(
               new Blob([JSON.stringify(node.toJS(), null, 2)],
-                {type: 'application/ld+json;charset=utf-8'}),
-              'exported.json')
+                {type: 'text/plain;charset=utf-8'}),
+              'exported.json', true)
             }, 'Save')
           ])
     ]
