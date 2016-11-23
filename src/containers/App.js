@@ -6,6 +6,7 @@ const React = require('react') // eslint-disable-line no-unused-vars
     , Editor = require('react-jsonld-editor')
     , Autosuggest = require('rebass-autosuggest')
     , Lowlight = require('react-lowlight')
+    , {saveAs} = require('file-saver')
     , { updateInput
       , updateSuggestions
       , updateNode
@@ -77,7 +78,12 @@ const App = (
             { language: 'json'
             , value: JSON.stringify(node.toJS(), null, 2)
             })
-          , h(Button, 'Save')
+          , h(Button,
+            {onClick: () => saveAs(
+              new Blob([JSON.stringify(node.toJS(), null, 2)],
+                {type: 'application/ld+json;charset=utf-8'}),
+              'exported.json')
+            }, 'Save')
           ])
     ]
   )
