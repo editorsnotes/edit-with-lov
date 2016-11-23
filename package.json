@@ -14,9 +14,9 @@
     "css": "cat node_modules/react-jsonld-editor/src/style.css node_modules/highlight.js/styles/default.css > lib/style.css",
     "predevelop": "npm -s run css",
     "develop": "budo src/standalone.js --css lib/style.css --live -- -t [ babelify --sourceMaps inline ]",
-    "prestandalone": "npm -s run build && mkdir -p standalone",
-    "standalone": "browserify lib/standalone.js | uglifyjs -c > standalone/bundle.js",
-    "poststandalone": "cp src/index.html node_modules/react-jsonld-editor/src/style.css standalone && cd standalone && zip ../standalone.zip *"
+    "prestandalone": "npm -s run build && npm -s run css && mkdir -p standalone",
+    "standalone": "NODE_ENV=production browserify lib/standalone.js | uglifyjs -c > standalone/bundle.js",
+    "poststandalone": "cp src/index.html lib/style.css standalone && cd standalone && zip ../standalone.zip *"
   },
   "author": "Ryan Shaw",
   "license": "ISC",
