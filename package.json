@@ -10,7 +10,10 @@
     "transpile": "babel src -d lib --source-maps inline",
     "prebuild": "npm -s run lint",
     "build": "npm -s run transpile",
-    "develop": "budo src/standalone.js --css node_modules/react-jsonld-editor/src/style.css --live -- -t [ babelify --sourceMaps inline ]",
+    "precss": "mkdir -p lib",
+    "css": "cat node_modules/react-jsonld-editor/src/style.css node_modules/highlight.js/styles/default.css > lib/style.css",
+    "predevelop": "npm -s run css",
+    "develop": "budo src/standalone.js --css lib/style.css --live -- -t [ babelify --sourceMaps inline ]",
     "prestandalone": "npm -s run build && mkdir -p standalone",
     "standalone": "browserify lib/standalone.js | uglifyjs -c > standalone/bundle.js",
     "poststandalone": "cp src/index.html node_modules/react-jsonld-editor/src/style.css standalone && cd standalone && zip ../standalone.zip *"
@@ -25,22 +28,23 @@
     "babelify": "^7.2.0",
     "budo": "^8.0.4",
     "eslint": "^2.12.0",
-    "react-dom": "^15.2.1",
     "uglify": "^0.1.5"
   },
   "dependencies": {
     "highland": "^2.8.1",
+    "highlight.js": "^9.7.0",
     "immutable": "^3.8.1",
     "n3": "^0.4.5",
     "rdf-ns": "0.0.2",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
     "react-hyperscript": "^2.4.0",
-    "react-jsonld-editor": "^3.0.0",
+    "react-jsonld-editor": "^5.1.1",
+    "react-lowlight": "^1.0.2",
     "react-redux": "^4.4.5",
+    "rebass": "^0.4.0-beta.8",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.3"
-  },
-  "peerDependencies": {
-    "react": "^0.14.7 || ^15.2.1"
   }
 }

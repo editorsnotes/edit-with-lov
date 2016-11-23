@@ -1,7 +1,7 @@
 const {getVocabularies, getVocabulary} = require('../lovutils')
 
 const UPDATE_INPUT = 'UPDATE_INPUT'
-const UPDATE_SELECTED_SUGGESTION = 'UPDATE_SELECTED_SUGGESTION'
+const UPDATE_SUGGESTIONS = 'UPDATE_SUGGESTIONS'
 const REQUEST_VOCABS = 'REQUEST_VOCABS'
 const RECEIVE_VOCABS = 'RECEIVE_VOCABS'
 const REQUEST_VOCAB = 'REQUEST_VOCAB'
@@ -15,9 +15,9 @@ const updateInput = input => (
   }
 )
 
-const updateSelectedSuggestion = suggestion => (
-  { type: UPDATE_SELECTED_SUGGESTION
-  , suggestion
+const updateSuggestions = suggestions => (
+  { type: UPDATE_SUGGESTIONS
+  , suggestions
   }
 )
 
@@ -77,7 +77,7 @@ const updateNode = node => (
 
 module.exports =
   { UPDATE_INPUT
-  , UPDATE_SELECTED_SUGGESTION
+  , UPDATE_SUGGESTIONS
   , REQUEST_VOCABS
   , RECEIVE_VOCABS
   , REQUEST_VOCAB
@@ -85,7 +85,7 @@ module.exports =
   , RECEIVE_ERROR
   , UPDATE_NODE
   , updateInput
-  , updateSelectedSuggestion
+  , updateSuggestions
   , requestVocabs
   , receiveVocabs
   , requestVocab

@@ -2,7 +2,7 @@ const {combineReducers} = require('redux')
     , {Map, List} = require('immutable')
     , {JSONLDNode} = require('immutable-jsonld')
     , { UPDATE_INPUT
-      , UPDATE_SELECTED_SUGGESTION
+      , UPDATE_SUGGESTIONS
       , REQUEST_VOCABS
       , RECEIVE_VOCABS
       , REQUEST_VOCAB
@@ -33,8 +33,6 @@ const input = (input = '', action) => {
   switch (action.type) {
     case UPDATE_INPUT:
       return action.input || ''
-    case UPDATE_SELECTED_SUGGESTION:
-      return action.suggestion.label ? action.suggestion.label : input
     case REQUEST_VOCAB:
       return ''
     default:
@@ -42,12 +40,14 @@ const input = (input = '', action) => {
   }
 }
 
-const selectedSuggestion = (selectedSuggestion = {}, action) => {
+const suggestions = (suggestions = [], action) => {
   switch (action.type) {
-    case UPDATE_SELECTED_SUGGESTION:
-      return action.suggestion
+
+    case UPDATE_SUGGESTIONS:
+      return action.suggestions
+
     default:
-      return selectedSuggestion
+      return suggestions
   }
 }
 
@@ -106,7 +106,7 @@ module.exports = combineReducers(
   { isFetchingVocabs
   , availableVocabs
   , input
-  , selectedSuggestion
+  , suggestions
   , loadedVocabs
   , classes
   , properties
