@@ -58,7 +58,8 @@ const App = (
             (e, {suggestion}) => fetchVocab(suggestion.id)
         , inputProps:
             { value: input
-            , placeholder: 'Add vocabulary'
+            , placeholder:
+                'Type the name of a vocabulary to add here, e.g. FOAF'
             , onChange: (e, {newValue, method}) => {
                 if (method === 'type') { updateInput(newValue) }
               }
