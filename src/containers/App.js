@@ -30,7 +30,22 @@ const App = (
   }) => (
 
   h(Block,
-    [ vocabularies.isEmpty()
+    [ h('p',
+        [ 'An example of using '
+        , h('a', {href: 'https://github.com/editorsnotes/react-jsonld-editor'},
+            'react-jsonld-editor')
+        , ' with dynamically loaded vocabuaries from '
+        , h('a', {href: 'http://lov.okfn.org'}, 'Linked Open Vocabularies')
+        , '. First, add some vocabularies by typing their names into the input below. Then, use the classes and properties from those vocabularies to create a JSON-LD object.'
+        ])
+    , h('p',
+        [ 'See the '
+        , h('a', {href: 'http://editorsnotes.github.io/edit-with-lov/'},
+            'source')
+        , ' for this demo.'
+        ])
+
+    , vocabularies.isEmpty()
         ? h(Heading, {size: 4, mb: 1}, ['No vocabularies loaded'])
         : h(Block,
             [ h(Heading, {size: 4, mb: 1}, ['Loaded vocabularies:'])
