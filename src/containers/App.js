@@ -40,7 +40,7 @@ const App = (
         ])
     , h('p',
         [ 'See the '
-        , h('a', {href: 'http://editorsnotes.github.io/edit-with-lov/'},
+        , h('a', {href: 'https://github.com/editorsnotes/edit-with-lov'},
             'source')
         , ' for this demo.'
         ])
